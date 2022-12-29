@@ -1,6 +1,7 @@
 package iss.workshop.ca_memorygame.adapter;
 
 import android.content.Context;
+import android.media.Image;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -35,14 +36,15 @@ public class ImageAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View view, ViewGroup viewGroup) {
         ImageView imageView;
+        int width = (int) Math.floor((viewGroup.getMeasuredWidth() - 40) / 3);
 
         if (view == null) {
             imageView = new ImageView(mContext);
-            imageView.setLayoutParams(new GridView.LayoutParams(400, 400));
-            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         } else {
             imageView = (ImageView) view;
         }
+        imageView.setLayoutParams(new GridView.LayoutParams(width, width));
+        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         imageView.setImageResource(R.drawable.placeholder);
         return imageView;
     }

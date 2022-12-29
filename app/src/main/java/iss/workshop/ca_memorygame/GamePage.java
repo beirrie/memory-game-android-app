@@ -71,6 +71,8 @@ public class GamePage extends AppCompatActivity {
                     selectedImageView2.setImageResource(gameImageLocations.get(position));
                     if (gameImageLocations.get(lastClicked) == gameImageLocations.get(position)) {
                         countMatch++;
+                        selectedImageView1.setOnClickListener(null);
+                        selectedImageView2.setOnClickListener(null);
                         clicked = 0;
                         if (getCountMatch() == 6) {
                             Toast.makeText(getApplicationContext(), "You win!", Toast.LENGTH_SHORT).show();
