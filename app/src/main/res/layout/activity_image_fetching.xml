@@ -30,5 +30,33 @@
             tools:layout_editor_absoluteX="301dp"
             tools:layout_editor_absoluteY="49dp" />
     </LinearLayout>
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="@android:style/Widget.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:layout_marginTop="2dp"
+        android:backgroundTint="#3EE7ED"
+        android:progress="0"
+        android:visibility="invisible" />
+
+    <TextView
+        android:id="@+id/progressDes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:gravity="center"
+        android:textColor="#100F0F"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+    <GridView
+        android:id="@+id/gvImages"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:horizontalSpacing="4dp"
+        android:numColumns="4"
+        android:verticalSpacing="4dp" />
+
 
 </LinearLayout>
