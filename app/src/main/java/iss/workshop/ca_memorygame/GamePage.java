@@ -5,6 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.CycleInterpolator;
+import android.view.animation.RotateAnimation;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -35,7 +38,7 @@ public class GamePage extends AppCompatActivity {
 
     private int countMatch = 0;
 
-    // to be replaced by fetched image url
+    // to be replaced
     private final int[] gameImages = new int[]{
             R.drawable.img1, R.drawable.img2,
             R.drawable.img3, R.drawable.img4,
@@ -89,6 +92,8 @@ public class GamePage extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(), "You win!", Toast.LENGTH_SHORT).show();
                         }
                     } else {
+                        Shake(selectedImageView1);
+                        Shake(selectedImageView2);
                         Handler handler = new Handler();
                         handler.postDelayed(new Runnable() {
                             @Override
@@ -116,5 +121,15 @@ public class GamePage extends AppCompatActivity {
 
     public void setCountMatch(int countMatch) {
         this.countMatch = countMatch;
+    }
+
+    private void Shake(View view)
+    {
+        RotateAnimation rotate = new RotateAnimation(-1, 1,Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        rotate.setDuration(250);
+        rotate.setStartOffset(50);
+        rotate.setRepeatMode(Animation.REVERSE);
+        rotate.setInterpolator(new CycleInterpolator(3));
+        view.startAnimation(rotate);
     }
 }
