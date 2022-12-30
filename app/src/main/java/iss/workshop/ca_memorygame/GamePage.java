@@ -2,6 +2,9 @@ package iss.workshop.ca_memorygame;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
@@ -29,7 +32,7 @@ import iss.workshop.ca_memorygame.adapter.ImageAdapter;
 public class GamePage extends AppCompatActivity {
 
     private int numOfElements;
-    private ArrayList<Integer> gameImageLocations = new ArrayList<>();
+    private ArrayList<Bitmap> gameImageLocations = new ArrayList<>();
 
     private boolean isBusy = false;
     private int clicked = 0;
@@ -41,20 +44,25 @@ public class GamePage extends AppCompatActivity {
 
     private int countMatch = 0;
 
-    // to be replaced
-    private final int[] gameImages = new int[]{
-            R.drawable.img1, R.drawable.img2,
-            R.drawable.img3, R.drawable.img4,
-            R.drawable.img5, R.drawable.img6
-    };
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_page);
 
-        for (int i : gameImages) {
-            gameImageLocations.add(i);
+        ArrayList<String> filePaths = new ArrayList<>();
+
+        Intent intent = getIntent();
+        filePaths = intent.getStringArrayListExtra("image_paths");
+
+        ArrayList<Bitmap> gameImages = new ArrayList<>();
+
+        for(int i = 0; i<6; i++){
+            Bitmap bitmap = BitmapFactory.decodeFile(filePaths.get(i));
+            gameImages.add(bitmap);
+        }
+
+        for (Bitmap bitmap : gameImages) {
+            gameImageLocations.add(bitmap);
         }
         gameImageLocations.addAll(gameImageLocations);
 
@@ -68,7 +76,7 @@ public class GamePage extends AppCompatActivity {
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                if (lastClicked == position) {
+                if (lastClicked == position && clicked !=0) {
                     return;
                 }
                 if (clicked == 0) {
