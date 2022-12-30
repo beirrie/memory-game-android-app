@@ -8,6 +8,7 @@ import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.SystemClock;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -17,6 +18,7 @@ import android.view.animation.ScaleAnimation;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -31,6 +33,10 @@ import iss.workshop.ca_memorygame.adapter.ImageAdapter;
 
 public class GamePage extends AppCompatActivity {
 
+    TextView txtTimer;
+    Handler customHandler = new Handler();
+    long startTime = 0L, timeInMilliSeconds=0L,timeSwapBuff=0L, updateTime=0L;
+
     private int numOfElements;
     private ArrayList<Bitmap> gameImageLocations = new ArrayList<>();
 
@@ -44,10 +50,32 @@ public class GamePage extends AppCompatActivity {
 
     private int countMatch = 0;
 
+    Runnable updateTimerThread = new Runnable(){
+        @Override
+        public void run(){
+
+            timeInMilliSeconds = SystemClock.uptimeMillis() - startTime;
+            updateTime = timeSwapBuff + timeInMilliSeconds;
+            int secs = (int) (updateTime/1000);
+            int mins=secs/60;
+            secs%=60;
+            int milliseconds=(int) (updateTime%1000);
+            txtTimer.setText("" + mins + ":" + String.format("%2d", secs) + ":"
+                    +String.format("%3d", milliseconds));
+            //this points to updateTimeThread (basically it calls itself)
+            customHandler.postDelayed(this,0);
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_page);
+
+        //Start Timer
+        txtTimer = findViewById(R.id.timerDynamic);
+        startTime = SystemClock.uptimeMillis();
+        customHandler.postDelayed(updateTimerThread,0);
 
         ArrayList<String> filePaths = new ArrayList<>();
 
@@ -96,12 +124,15 @@ public class GamePage extends AppCompatActivity {
                             .into(selectedImageView2);
                     if (gameImageLocations.get(lastClicked) == gameImageLocations.get(position)) {
                         countMatch++;
+                        TextView scoreTextView = findViewById(R.id.gameScoreDynamic);
+                        scoreTextView.setText(String.valueOf(countMatch));
                         selectedImageView1.setOnClickListener(null);
                         selectedImageView2.setOnClickListener(null);
                         pulse(selectedImageView1);
                         pulse(selectedImageView2);
                         clicked = 0;
                         if (getCountMatch() == 6) {
+                            customHandler.removeCallbacks(updateTimerThread);
                             Toast.makeText(getApplicationContext(), "You win!", Toast.LENGTH_SHORT).show();
                             playWinSound(selectedImageView2);
                         } else {
