@@ -2,20 +2,23 @@ package iss.workshop.ca_memorygame;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.view.View;
 import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.view.animation.CycleInterpolator;
 import android.view.animation.RotateAnimation;
 import android.view.animation.ScaleAnimation;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -26,6 +29,8 @@ import com.bumptech.glide.load.MultiTransformation;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -33,16 +38,15 @@ import iss.workshop.ca_memorygame.adapter.ImageAdapter;
 
 public class GamePage extends AppCompatActivity {
 
+    Dialog dialog;
     TextView txtTimer;
     Handler customHandler = new Handler();
-    long startTime = 0L, timeInMilliSeconds=0L,timeSwapBuff=0L, updateTime=0L;
+    long startTime = 0L, timeInMilliSeconds = 0L, timeSwapBuff = 0L, updateTime = 0L;
 
     private int numOfElements;
     private ArrayList<Bitmap> gameImageLocations = new ArrayList<>();
 
-    private boolean isBusy = false;
     private int clicked = 0;
-    private boolean turnOver = false;
     int lastClicked = -1;
 
     ImageView selectedImageView1 = null;
@@ -50,20 +54,20 @@ public class GamePage extends AppCompatActivity {
 
     private int countMatch = 0;
 
-    Runnable updateTimerThread = new Runnable(){
+    Runnable updateTimerThread = new Runnable() {
         @Override
-        public void run(){
+        public void run() {
 
             timeInMilliSeconds = SystemClock.uptimeMillis() - startTime;
             updateTime = timeSwapBuff + timeInMilliSeconds;
-            int secs = (int) (updateTime/1000);
-            int mins=secs/60;
-            secs%=60;
-            int milliseconds=(int) (updateTime%1000);
+            int secs = (int) (updateTime / 1000);
+            int mins = secs / 60;
+            secs %= 60;
+            int milliseconds = (int) (updateTime % 1000);
             txtTimer.setText("" + mins + ":" + String.format("%2d", secs) + ":"
-                    +String.format("%3d", milliseconds));
+                    + String.format("%3d", milliseconds));
             //this points to updateTimeThread (basically it calls itself)
-            customHandler.postDelayed(this,0);
+            customHandler.postDelayed(this, 0);
         }
     };
 
@@ -75,7 +79,9 @@ public class GamePage extends AppCompatActivity {
         //Start Timer
         txtTimer = findViewById(R.id.timerDynamic);
         startTime = SystemClock.uptimeMillis();
-        customHandler.postDelayed(updateTimerThread,0);
+        customHandler.postDelayed(updateTimerThread, 0);
+
+        dialog = new Dialog(this);
 
         ArrayList<String> filePaths = new ArrayList<>();
 
@@ -84,7 +90,7 @@ public class GamePage extends AppCompatActivity {
 
         ArrayList<Bitmap> gameImages = new ArrayList<>();
 
-        for(int i = 0; i<6; i++){
+        for (int i = 0; i < 6; i++) {
             Bitmap bitmap = BitmapFactory.decodeFile(filePaths.get(i));
             gameImages.add(bitmap);
         }
@@ -104,7 +110,7 @@ public class GamePage extends AppCompatActivity {
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                if (lastClicked == position && clicked !=0) {
+                if (lastClicked == position && clicked != 0) {
                     return;
                 }
                 if (clicked == 0) {
@@ -133,8 +139,8 @@ public class GamePage extends AppCompatActivity {
                         clicked = 0;
                         if (getCountMatch() == 6) {
                             customHandler.removeCallbacks(updateTimerThread);
-                            Toast.makeText(getApplicationContext(), "You win!", Toast.LENGTH_SHORT).show();
                             playWinSound(selectedImageView2);
+                            openWinDialog(txtTimer.getText());
                         } else {
                             playMatchSuccessSound(selectedImageView2);
                         }
@@ -199,5 +205,22 @@ public class GamePage extends AppCompatActivity {
     private void playWinSound(View view) {
         MediaPlayer mp = MediaPlayer.create(view.getContext(), R.raw.win);
         mp.start();
+    }
+
+    private void openWinDialog(CharSequence timeTaken) {
+        dialog.setContentView(R.layout.game_won_popup);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        TextView textView = dialog.findViewById(R.id.timeTaken);
+        textView.setText("You took " + timeTaken + "ms!");
+        Button btnBackToMainMenu = dialog.findViewById(R.id.btnBackToMainMenu);
+        btnBackToMainMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+                Intent intent = new Intent(view.getContext(), MainActivity.class);
+                startActivity(intent);
+            }
+        });
+        dialog.show();
     }
 }

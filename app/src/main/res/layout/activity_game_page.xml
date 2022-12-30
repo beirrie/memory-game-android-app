@@ -42,7 +42,8 @@
             android:text="0:00:000"
             android:textSize="25dp"
             android:textStyle="bold"
-            android:layout_gravity="right">
+            android:layout_gravity="right"
+            android:layout_marginRight="10dp">
 
         </TextView>
 
