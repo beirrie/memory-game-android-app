@@ -13,3 +13,12 @@
 .externalNativeBuild
 .cxx
 local.properties
+.idea/.name
+.idea/gradle.xml
+.vs/MGame-Mabel/v17/.suo
+app/src/main/AndroidManifest.xml
+app/src/main/java/iss/workshop/ca_memorygame/ImageFetchingActivity.java
+app/src/main/java/iss/workshop/ca_memorygame/MainActivity.java
+app/src/main/res/layout/activity_image_fetching.xml
+app/src/main/res/layout/activity_main.xml
+app/src/main/res/values/strings.xml
