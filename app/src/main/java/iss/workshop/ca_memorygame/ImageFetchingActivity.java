@@ -15,6 +15,9 @@ import android.widget.Toast;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 public class ImageFetchingActivity extends AppCompatActivity {
 
@@ -26,7 +29,7 @@ public class ImageFetchingActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     private TextView progressDes;
     private boolean isThreadRunning;
-
+    private ImageSelectListener listener;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,10 +56,17 @@ public class ImageFetchingActivity extends AppCompatActivity {
         loadDefaultImage();
         GridView gridView = findViewById(R.id.gvImages);
         adapter = new GridImageAdapter(this, this.imageFetchingService.imageContents);
-        //listener = new SelectImgListener(this);
+        listener = new ImageSelectListener(this);
 
         gridView.setAdapter(adapter);
-        //gridView.setOnItemClickListener(listener);
+        gridView.setOnItemClickListener(listener);
+    }
+    private void prepareDataForListener() {
+        listener.setFiles(imageFetchingService.imageFiles);
+        List<Boolean> list = new ArrayList<>(Arrays.asList(new Boolean[imageFetchingService.imageContents.size()]));
+        Collections.fill(list, Boolean.FALSE);
+        listener.setSelectedImages(list);
+        listener.setDownloadFinished(true);
     }
 
     public void fetchImageClickHandler(View view){
@@ -79,6 +89,7 @@ public class ImageFetchingActivity extends AppCompatActivity {
                     runOnUiThread(new UpdateProgressRunnable(count));
                     count++;
                 }
+                prepareDataForListener();
                 runOnUiThread(new UpdateGridViewRunnable());
             }
         });

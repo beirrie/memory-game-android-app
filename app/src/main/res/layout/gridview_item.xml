@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:layout_alignEnd="@+id/gridImage"
         android:layout_alignBottom="@+id/gridImage"
-        android:background="@drawable/rectangle"
+        android:background="@drawable/circle"
         android:src="@drawable/tick"
         android:visibility="invisible"
         tools:ignore="ContentDescription" />

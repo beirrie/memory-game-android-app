@@ -22,6 +22,7 @@ public class ImageFetchingService {
 
     public ArrayList<String> imgUrlList = new ArrayList<>();
     public ArrayList<Bitmap> imageContents = new ArrayList<>();
+    public ArrayList<File> imageFiles = new ArrayList<>();
 
     public String prepareImageUrls(String url){
         if(url == null || url == ""){
@@ -68,6 +69,7 @@ public class ImageFetchingService {
 
             out.close();
             in.close();
+            imageFiles.add(targetFile);
             imageContents.add(BitmapFactory.decodeFile(targetFile.getAbsolutePath()));
             return true;
 
