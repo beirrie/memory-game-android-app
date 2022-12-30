@@ -2,6 +2,7 @@ package iss.workshop.ca_memorygame;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -90,10 +91,14 @@ public class GamePage extends AppCompatActivity {
                         clicked = 0;
                         if (getCountMatch() == 6) {
                             Toast.makeText(getApplicationContext(), "You win!", Toast.LENGTH_SHORT).show();
+                            playWinSound(selectedImageView2);
+                        } else {
+                            playMatchSuccessSound(selectedImageView2);
                         }
                     } else {
                         Shake(selectedImageView1);
                         Shake(selectedImageView2);
+                        playMatchFailSound(selectedImageView2);
                         Handler handler = new Handler();
                         handler.postDelayed(new Runnable() {
                             @Override
@@ -123,13 +128,26 @@ public class GamePage extends AppCompatActivity {
         this.countMatch = countMatch;
     }
 
-    private void Shake(View view)
-    {
-        RotateAnimation rotate = new RotateAnimation(-1, 1,Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+    private void Shake(View view) {
+        RotateAnimation rotate = new RotateAnimation(-1, 1, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
         rotate.setDuration(250);
         rotate.setStartOffset(50);
         rotate.setRepeatMode(Animation.REVERSE);
         rotate.setInterpolator(new CycleInterpolator(3));
         view.startAnimation(rotate);
+    }
+
+    private void playMatchSuccessSound(View view) {
+        MediaPlayer mp = MediaPlayer.create(view.getContext(), R.raw.match_success);
+        mp.start();
+    }
+    private void playMatchFailSound(View view) {
+        MediaPlayer mp = MediaPlayer.create(view.getContext(), R.raw.match_fail);
+        mp.start();
+    }
+
+    private void playWinSound(View view) {
+        MediaPlayer mp = MediaPlayer.create(view.getContext(), R.raw.win);
+        mp.start();
     }
 }
