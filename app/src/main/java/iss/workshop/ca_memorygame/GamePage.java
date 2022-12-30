@@ -10,6 +10,11 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.MultiTransformation;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -64,11 +69,17 @@ public class GamePage extends AppCompatActivity {
                     lastClicked = position;
                     selectedImageView1 = (ImageView) view;
                     clicked++;
-                    selectedImageView1.setImageResource(gameImageLocations.get(position));
+                    Glide.with(selectedImageView1.getContext())
+                            .load(gameImageLocations.get(position))
+                            .transform(new MultiTransformation(new CenterCrop(), new RoundedCorners(getResources().getInteger(R.integer.corner_radius))))
+                            .into(selectedImageView1);
                 } else if (clicked == 1) {
                     selectedImageView2 = (ImageView) view;
                     clicked++;
-                    selectedImageView2.setImageResource(gameImageLocations.get(position));
+                    Glide.with(selectedImageView2.getContext())
+                            .load(gameImageLocations.get(position))
+                            .transform(new MultiTransformation(new CenterCrop(), new RoundedCorners(getResources().getInteger(R.integer.corner_radius))))
+                            .into(selectedImageView2);
                     if (gameImageLocations.get(lastClicked) == gameImageLocations.get(position)) {
                         countMatch++;
                         selectedImageView1.setOnClickListener(null);
@@ -82,8 +93,14 @@ public class GamePage extends AppCompatActivity {
                         handler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                selectedImageView1.setImageResource(R.drawable.placeholder);
-                                selectedImageView2.setImageResource(R.drawable.placeholder);
+                                Glide.with(selectedImageView1.getContext())
+                                        .load(R.drawable.placeholder)
+                                        .transform(new MultiTransformation(new CenterCrop(), new RoundedCorners(getResources().getInteger(R.integer.corner_radius))))
+                                        .into(selectedImageView1);
+                                Glide.with(selectedImageView2.getContext())
+                                        .load(R.drawable.placeholder)
+                                        .transform(new MultiTransformation(new CenterCrop(), new RoundedCorners(getResources().getInteger(R.integer.corner_radius))))
+                                        .into(selectedImageView2);
                                 clicked = 0;
                             }
                         }, 1000);
