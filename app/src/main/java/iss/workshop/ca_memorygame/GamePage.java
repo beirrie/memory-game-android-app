@@ -7,8 +7,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.animation.CycleInterpolator;
 import android.view.animation.RotateAnimation;
+import android.view.animation.ScaleAnimation;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -88,6 +90,8 @@ public class GamePage extends AppCompatActivity {
                         countMatch++;
                         selectedImageView1.setOnClickListener(null);
                         selectedImageView2.setOnClickListener(null);
+                        pulse(selectedImageView1);
+                        pulse(selectedImageView2);
                         clicked = 0;
                         if (getCountMatch() == 6) {
                             Toast.makeText(getApplicationContext(), "You win!", Toast.LENGTH_SHORT).show();
@@ -96,8 +100,8 @@ public class GamePage extends AppCompatActivity {
                             playMatchSuccessSound(selectedImageView2);
                         }
                     } else {
-                        Shake(selectedImageView1);
-                        Shake(selectedImageView2);
+                        shake(selectedImageView1);
+                        shake(selectedImageView2);
                         playMatchFailSound(selectedImageView2);
                         Handler handler = new Handler();
                         handler.postDelayed(new Runnable() {
@@ -128,19 +132,26 @@ public class GamePage extends AppCompatActivity {
         this.countMatch = countMatch;
     }
 
-    private void Shake(View view) {
+    private void shake(View view) {
         RotateAnimation rotate = new RotateAnimation(-1, 1, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
         rotate.setDuration(250);
-        rotate.setStartOffset(50);
         rotate.setRepeatMode(Animation.REVERSE);
         rotate.setInterpolator(new CycleInterpolator(3));
         view.startAnimation(rotate);
+    }
+
+    private void pulse(View view) {
+        ScaleAnimation zoom = new ScaleAnimation(1.05f, 1.05f, 1.05f, 1.05f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        zoom.setDuration(250);
+        zoom.setRepeatMode(Animation.REVERSE);
+        view.startAnimation(zoom);
     }
 
     private void playMatchSuccessSound(View view) {
         MediaPlayer mp = MediaPlayer.create(view.getContext(), R.raw.match_success);
         mp.start();
     }
+
     private void playMatchFailSound(View view) {
         MediaPlayer mp = MediaPlayer.create(view.getContext(), R.raw.match_fail);
         mp.start();
