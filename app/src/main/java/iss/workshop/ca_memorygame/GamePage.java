@@ -3,7 +3,9 @@ package iss.workshop.ca_memorygame;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -17,28 +19,36 @@ import android.view.animation.Animation;
 import android.view.animation.CycleInterpolator;
 import android.view.animation.RotateAnimation;
 import android.view.animation.ScaleAnimation;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
-import android.widget.Button;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.MultiTransformation;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
+import java.util.List;
 
 import iss.workshop.ca_memorygame.adapter.ImageAdapter;
 
 public class GamePage extends AppCompatActivity {
 
     Dialog dialog;
+    EditText highScoreName;
+    String nameForHighScore = "";
+    List<String> scores = new ArrayList<String>();
+    List<String> namesInHighScores = new ArrayList<String>();
+    int newHighScoreIndex;
     TextView txtTimer;
     Handler customHandler = new Handler();
     long startTime = 0L, timeInMilliSeconds = 0L, timeSwapBuff = 0L, updateTime = 0L;
@@ -140,7 +150,11 @@ public class GamePage extends AppCompatActivity {
                         if (getCountMatch() == 6) {
                             customHandler.removeCallbacks(updateTimerThread);
                             playWinSound(selectedImageView2);
-                            openWinDialog(txtTimer.getText());
+                            if (isHighScore()) {
+                                popupEnterName();
+                            } else {
+                                goToImageFetchingActivity();
+                            }
                         } else {
                             playMatchSuccessSound(selectedImageView2);
                         }
@@ -207,20 +221,108 @@ public class GamePage extends AppCompatActivity {
         mp.start();
     }
 
-    private void openWinDialog(CharSequence timeTaken) {
+    public String getTimeScore() {
+        return txtTimer.getText().toString();
+    }
+
+    public long getDuration(String time) {
+        String[] parts = time.split(":");
+        long mins = Long.parseLong(parts[0]) * 60000;
+        long secs = Long.parseLong(parts[1]) * 1000;
+        long milliSecs = Long.parseLong(parts[2]);
+        return mins + secs + milliSecs;
+    }
+
+    private boolean isHighScore() {
+        long scoreDuration = getDuration(getTimeScore());
+        SharedPreferences pref = getSharedPreferences("scores", MODE_PRIVATE);
+        String highScore0 = pref.getString("highScore0", "");
+        String highScore1 = pref.getString("highScore1", "");
+        String highScore2 = pref.getString("highScore2", "");
+        String highScore3 = pref.getString("highScore3", "");
+        String highScore4 = pref.getString("highScore4", "");
+        scores.add(highScore0);
+        scores.add(highScore1);
+        scores.add(highScore2);
+        scores.add(highScore3);
+        scores.add(highScore4);
+        for (int i = 0; i < scores.size(); i++) {
+            if (scores.get(i).isEmpty()) {
+                newHighScoreIndex = i;
+                return true;
+            } else {
+                long timeInHighscore = getDuration(scores.get(i));
+                if (scoreDuration <= timeInHighscore) {
+                    newHighScoreIndex = i;
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private void popupEnterName() {
         dialog.setContentView(R.layout.game_won_popup);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        TextView textView = dialog.findViewById(R.id.timeTaken);
-        textView.setText("You took " + timeTaken + "ms!");
-        Button btnBackToMainMenu = dialog.findViewById(R.id.btnBackToMainMenu);
-        btnBackToMainMenu.setOnClickListener(new View.OnClickListener() {
+        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
-            public void onClick(View view) {
-                dialog.dismiss();
-                Intent intent = new Intent(view.getContext(), MainActivity.class);
-                startActivity(intent);
+            public void onDismiss(final DialogInterface arg0) {
+//                hideSoftKeyBoard();
+                goToImageFetchingActivity();
             }
         });
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        TextView textView = dialog.findViewById(R.id.timeTaken);
+        textView.setText("You took " + getTimeScore() + "ms!");
+        highScoreName = dialog.findViewById(R.id.enterName);
         dialog.show();
     }
+
+    public void enterNameHandler(View view) {
+        nameForHighScore = highScoreName.getText().toString();
+        if (nameForHighScore == null || nameForHighScore.isEmpty()) {
+            goToImageFetchingActivity();
+        }
+        if (nameForHighScore.length() > 9) {
+            TextView error = dialog.findViewById(R.id.errorMsg);
+            error.setText("Not more than 8 letters please!");
+            return;
+        }
+//        hideSoftKeyBoard();
+        setScoreBoard();
+        dialog.dismiss();
+        goToImageFetchingActivity();
+    }
+
+    public void setScoreBoard() {
+        SharedPreferences pref = getSharedPreferences("scores", MODE_PRIVATE);
+        namesInHighScores.add(pref.getString("highScoreName0", ""));
+        namesInHighScores.add(pref.getString("highScoreName1", ""));
+        namesInHighScores.add(pref.getString("highScoreName2", ""));
+        namesInHighScores.add(pref.getString("highScoreName3", ""));
+        namesInHighScores.add(pref.getString("highScoreName4", ""));
+
+        SharedPreferences.Editor editor = pref.edit();
+
+        for (int i = scores.size() - 1; i > newHighScoreIndex; i--) {
+            editor.putString("highScore" + i, scores.get(i - 1));
+            editor.putString("highScoreName" + i, namesInHighScores.get(i - 1));
+            editor.commit();
+        }
+        editor.putString("highScoreName" + newHighScoreIndex, nameForHighScore);
+        editor.putString("highScore" + newHighScoreIndex, getTimeScore());
+        editor.commit();
+    }
+
+    public void goToImageFetchingActivity() {
+        Intent intent = new Intent(this, ImageFetchingActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+//    private void hideSoftKeyBoard() {
+//        InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+//        if (imm.isAcceptingText()) {
+//            imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+//        }
+//    }
 }

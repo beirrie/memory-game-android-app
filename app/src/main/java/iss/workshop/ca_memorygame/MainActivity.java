@@ -16,9 +16,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
-    public void playClickHandler(View view)
-    {
+    public void playClickHandler(View view) {
         Intent imageFetchIntent = new Intent(this, ImageFetchingActivity.class);
         startActivity(imageFetchIntent);
+    }
+
+    public void scoreBoardClickHandler(View view) {
+        Intent scoreBoardIntent = new Intent(this, Scoreboard.class);
+        startActivity(scoreBoardIntent);
     }
 }

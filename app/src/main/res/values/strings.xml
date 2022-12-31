@@ -2,4 +2,5 @@
     <string name="app_name">CA_MemoryGame</string>
     <string name="play">Play</string>
     <string name="imageFetch">Fetch</string>
+    <string name="score_blank">\??????</string>
 </resources>

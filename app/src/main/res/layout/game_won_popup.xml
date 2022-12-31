@@ -18,7 +18,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#FFF2CF"
+            android:background="@color/light_yellow"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -27,15 +27,15 @@
 
             <TextView
                 android:id="@+id/textWin"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="32dp"
-                android:layout_marginEnd="32dp"
-                android:text="You Won!"
+                android:layout_width="250dp"
+                android:layout_height="150dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:fontFamily="@font/bungee_shade"
+                android:text="Well Played!"
                 android:textAlignment="center"
-                android:textColor="#FFC107"
-                android:textSize="48sp"
+                android:textColor="@color/yellow"
+                android:textSize="44dp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -44,36 +44,67 @@
                 tools:layout_conversion_absoluteWidth="142dp" />
 
             <Button
-                android:id="@+id/btnBackToMainMenu"
+                android:id="@+id/btnEnterNameOK"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
-                android:layout_marginTop="24dp"
                 android:layout_marginEnd="32dp"
-                android:layout_marginBottom="8dp"
+                android:layout_marginBottom="16dp"
                 android:backgroundTint="@color/yellow"
-                android:text="Back to Main Menu"
+                android:text="OK"
+                android:onClick="enterNameHandler"
                 android:textColor="@color/white"
-                android:textSize="12sp"
+                android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.51"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textWin" />
+                app:layout_constraintStart_toStartOf="parent" />
+
 
             <TextView
                 android:id="@+id/timeTaken"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginBottom="16dp"
                 android:text="Time Taken"
-                android:textColor="#FAB700"
+                android:textColor="@color/yellow"
+                android:textSize="20sp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/btnBackToMainMenu"
+                app:layout_constraintBottom_toTopOf="@+id/btnEnterNameOK"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textWin" />
+                app:layout_constraintTop_toBottomOf="@+id/textWin"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <TextView
+                android:id="@+id/errorMsg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/teal_700"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/timeTaken" />
+
+            <EditText
+                android:id="@+id/enterName"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                android:hint="Enter name to submit your score!"
+                android:inputType="textPersonName"
+                android:textAlignment="center"
+                android:textColor="@color/brown"
+                android:textColorHint="@color/yellow"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toTopOf="@+id/btnEnterNameOK"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/timeTaken" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
