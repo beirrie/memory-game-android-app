@@ -48,7 +48,7 @@ public class ImageFetchingActivity extends AppCompatActivity {
     private  void loadDefaultImage(){
         this.imageFetchingService.imageContents = new ArrayList<>();
         for (int i = 0; i < maxImages; i++) {
-            this.imageFetchingService.imageContents.add(BitmapFactory.decodeResource(this.getResources(), R.drawable.recx));
+            this.imageFetchingService.imageContents.add(BitmapFactory.decodeResource(this.getResources(), R.drawable.placeholder));
         }
     }
 
