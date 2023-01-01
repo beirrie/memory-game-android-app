@@ -22,6 +22,7 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -69,8 +70,8 @@ public class GamePage extends AppCompatActivity {
             int mins = secs / 60;
             secs %= 60;
             int milliseconds = (int) (updateTime % 1000);
-            txtTimer.setText("" + mins + ":" + String.format("%2d", secs) + ":"
-                    + String.format("%3d", milliseconds));
+            txtTimer.setText("" + mins + ":" + String.format("%02d", secs) + ":"
+                    + String.format("%03d", milliseconds));
             //this points to updateTimeThread (basically it calls itself)
             customHandler.postDelayed(this, 0);
         }
@@ -80,11 +81,6 @@ public class GamePage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_page);
-
-        //Start Timer
-        txtTimer = findViewById(R.id.timerDynamic);
-        startTime = SystemClock.uptimeMillis();
-        customHandler.postDelayed(updateTimerThread, 0);
 
         dialog = new Dialog(this);
 
@@ -148,6 +144,7 @@ public class GamePage extends AppCompatActivity {
                             if (isHighScore()) {
                                 popupEnterName();
                             } else {
+                                Toast.makeText(GamePage.this, "Completed in " + getTimeScore() + "ms!", Toast.LENGTH_LONG).show();
                                 goToImageFetchingActivity();
                             }
                         } else {
@@ -176,6 +173,10 @@ public class GamePage extends AppCompatActivity {
                 }
             }
         });
+        //Start Timer
+        txtTimer = findViewById(R.id.timerDynamic);
+        startTime = SystemClock.uptimeMillis();
+        customHandler.postDelayed(updateTimerThread, 0);
     }
 
     public int getCountMatch() {
