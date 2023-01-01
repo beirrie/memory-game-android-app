@@ -27,6 +27,7 @@
         </activity>
         <activity
             android:name=".ImageFetchingActivity"
+            android:launchMode="singleInstance"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
