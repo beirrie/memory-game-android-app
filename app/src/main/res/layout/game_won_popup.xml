@@ -99,7 +99,7 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp"
-                android:hint="Enter name to submit your score!"
+                android:hint="Enter your name!"
                 android:inputType="textPersonName"
                 android:singleLine="true"
                 android:textAlignment="center"
