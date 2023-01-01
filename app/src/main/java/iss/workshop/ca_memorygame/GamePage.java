@@ -1,7 +1,5 @@
 package iss.workshop.ca_memorygame;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -19,24 +17,21 @@ import android.view.animation.Animation;
 import android.view.animation.CycleInterpolator;
 import android.view.animation.RotateAnimation;
 import android.view.animation.ScaleAnimation;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.MultiTransformation;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 import iss.workshop.ca_memorygame.adapter.ImageAdapter;
@@ -227,9 +222,9 @@ public class GamePage extends AppCompatActivity {
 
     public long getDuration(String time) {
         String[] parts = time.split(":");
-        long mins = Long.parseLong(parts[0]) * 60000;
-        long secs = Long.parseLong(parts[1]) * 1000;
-        long milliSecs = Long.parseLong(parts[2]);
+        long mins = Long.parseLong(parts[0].trim()) * 60000;
+        long secs = Long.parseLong(parts[1].trim()) * 1000;
+        long milliSecs = Long.parseLong(parts[2].trim());
         return mins + secs + milliSecs;
     }
 
@@ -266,7 +261,6 @@ public class GamePage extends AppCompatActivity {
         dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(final DialogInterface arg0) {
-//                hideSoftKeyBoard();
                 goToImageFetchingActivity();
             }
         });
@@ -287,7 +281,6 @@ public class GamePage extends AppCompatActivity {
             error.setText("Not more than 8 letters please!");
             return;
         }
-//        hideSoftKeyBoard();
         setScoreBoard();
         dialog.dismiss();
         goToImageFetchingActivity();
@@ -318,11 +311,4 @@ public class GamePage extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
-
-//    private void hideSoftKeyBoard() {
-//        InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-//        if (imm.isAcceptingText()) {
-//            imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
-//        }
-//    }
 }

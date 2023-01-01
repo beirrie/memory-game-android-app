@@ -8,13 +8,14 @@
 
     <Button
         android:id="@+id/btnPlay"
-        android:layout_width="150dp"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:fontFamily="sans-serif"
+        android:elegantTextHeight="true"
+        android:fontFamily="@font/bungee"
         android:onClick="playClickHandler"
         android:text="@string/play"
         android:textColor="#ffeeec"
-        android:textStyle="bold"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -22,14 +23,15 @@
 
     <Button
         android:id="@+id/btnScoreBoard"
-        android:layout_width="150dp"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:fontFamily="sans-serif"
+        android:elegantTextHeight="true"
+        android:fontFamily="@font/bungee"
         android:onClick="scoreBoardClickHandler"
         android:text="Score Board"
         android:textColor="#ffeeec"
-        android:textStyle="bold"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnPlay" />

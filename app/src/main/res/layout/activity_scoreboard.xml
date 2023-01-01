@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFD968"
+    android:background="@color/yellow_200"
     tools:context=".Scoreboard">
 
 
@@ -22,11 +22,12 @@
             android:id="@+id/score_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
+            android:layout_marginEnd="8dp"
+            android:elegantTextHeight="true"
             android:fontFamily="@font/bungee"
-            android:text="Time"
+            android:text="Time (ms)"
             android:textColor="@color/brown"
-            android:textSize="20sp"
+            android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -36,10 +37,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="48dp"
+            android:elegantTextHeight="true"
             android:fontFamily="@font/bungee"
             android:text="Name"
             android:textColor="@color/brown"
-            android:textSize="20sp"
+            android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -68,32 +70,27 @@
             app:layout_constraintStart_toStartOf="parent"
             tools:layout_editor_absoluteY="189dp">
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/top1text"
                 android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:layout_marginStart="10dp"
-                android:orientation="vertical"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="-4dp"
+                android:elegantTextHeight="true"
+                android:fontFamily="@font/bungee_shade"
+                android:text="1"
+                android:textColor="#FF9800"
+                android:textSize="34sp"
+                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <TextView
-                    android:id="@+id/top1text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="-25dp"
-                    android:fontFamily="@font/bungee_shade"
-                    android:text="1"
-                    android:textColor="#FF9800"
-                    android:textSize="34sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/top1text_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
+                android:layout_marginEnd="8dp"
+                android:elegantTextHeight="true"
                 android:fontFamily="@font/bungee"
                 android:text="@string/score_blank"
                 android:textColor="@color/brown"
@@ -107,6 +104,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="48dp"
+                android:elegantTextHeight="true"
                 android:fontFamily="@font/bungee"
                 android:text="@string/score_blank"
                 android:textColor="@color/brown"
@@ -141,44 +139,40 @@
             app:layout_constraintStart_toStartOf="parent"
             tools:layout_editor_absoluteY="189dp">
 
-            <LinearLayout
+            <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:layout_marginStart="10dp"
-                android:orientation="vertical"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="-4dp"
+                android:elegantTextHeight="true"
+                android:fontFamily="@font/bungee_shade"
+                android:text="2"
+                android:textColor="#FF9800"
+                android:textSize="34sp"
+                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="-25dp"
-                    android:fontFamily="@font/bungee_shade"
-                    android:text="2"
-                    android:textColor="#FF9800"
-                    android:textSize="34sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/top2text_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
+                android:layout_marginEnd="8dp"
+                android:elegantTextHeight="true"
                 android:fontFamily="@font/bungee"
                 android:text="@string/score_blank"
+                android:textColor="@color/brown"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:textColor="@color/brown" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/top2text_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="48dp"
+                android:elegantTextHeight="true"
                 android:fontFamily="@font/bungee"
                 android:text="@string/score_blank"
                 android:textColor="@color/brown"
@@ -213,32 +207,27 @@
             app:layout_constraintStart_toStartOf="parent"
             tools:layout_editor_absoluteY="189dp">
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/top3text"
                 android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:layout_marginStart="10dp"
-                android:orientation="vertical"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="-4dp"
+                android:elegantTextHeight="true"
+                android:fontFamily="@font/bungee_shade"
+                android:text="3"
+                android:textColor="#FF9800"
+                android:textSize="34sp"
+                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <TextView
-                    android:id="@+id/top3text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="-25dp"
-                    android:fontFamily="@font/bungee_shade"
-                    android:text="3"
-                    android:textColor="#FF9800"
-                    android:textSize="34sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/top3text_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
+                android:layout_marginEnd="8dp"
+                android:elegantTextHeight="true"
                 android:fontFamily="@font/bungee"
                 android:text="@string/score_blank"
                 android:textColor="@color/brown"
@@ -258,7 +247,8 @@
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:elegantTextHeight="true" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </com.google.android.material.card.MaterialCardView>
@@ -286,31 +276,26 @@
             app:layout_constraintStart_toStartOf="parent"
             tools:layout_editor_absoluteY="189dp">
 
-            <LinearLayout
+            <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:layout_marginStart="10dp"
-                android:orientation="vertical"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="-4dp"
+                android:elegantTextHeight="true"
+                android:fontFamily="@font/bungee_shade"
+                android:text="4"
+                android:textColor="#FF9800"
+                android:textSize="34sp"
+                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="-25dp"
-                    android:fontFamily="@font/bungee_shade"
-                    android:text="4"
-                    android:textColor="#FF9800"
-                    android:textSize="34sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/top4text_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
+                android:layout_marginEnd="8dp"
+                android:elegantTextHeight="true"
                 android:fontFamily="@font/bungee"
                 android:text="@string/score_blank"
                 android:textColor="@color/brown"
@@ -324,6 +309,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="48dp"
+                android:elegantTextHeight="true"
                 android:fontFamily="@font/bungee"
                 android:text="@string/score_blank"
                 android:textColor="@color/brown"
@@ -357,32 +343,27 @@
             app:layout_constraintStart_toStartOf="parent"
             tools:layout_editor_absoluteY="189dp">
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/top5text"
                 android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:layout_marginStart="10dp"
-                android:orientation="vertical"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="-4dp"
+                android:elegantTextHeight="true"
+                android:fontFamily="@font/bungee_shade"
+                android:text="5"
+                android:textColor="#FF9800"
+                android:textSize="34sp"
+                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <TextView
-                    android:id="@+id/top5text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="-25dp"
-                    android:fontFamily="@font/bungee_shade"
-                    android:text="5"
-                    android:textColor="#FF9800"
-                    android:textSize="34sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/top5text_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
+                android:layout_marginEnd="8dp"
+                android:elegantTextHeight="true"
                 android:fontFamily="@font/bungee"
                 android:text="@string/score_blank"
                 android:textColor="@color/brown"
@@ -396,6 +377,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="48dp"
+                android:elegantTextHeight="true"
                 android:fontFamily="@font/bungee"
                 android:text="@string/score_blank"
                 android:textColor="@color/brown"
@@ -415,7 +397,7 @@
         android:fontFamily="@font/bungee_shade"
         android:text="Score Board"
         android:textColor="@color/brown"
-        android:textSize="38sp"
+        android:textSize="42sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
         app:layout_constraintEnd_toEndOf="parent"

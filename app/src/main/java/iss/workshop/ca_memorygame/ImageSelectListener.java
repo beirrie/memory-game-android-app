@@ -84,6 +84,7 @@ public class ImageSelectListener implements AdapterView.OnItemClickListener {
             Intent intent = new Intent(this.currentActivity, GamePage.class);
             intent.putStringArrayListExtra("image_paths", filePaths);
             this.currentActivity.startActivity(intent);
+            currentActivity.finish();
         }
     }
 }

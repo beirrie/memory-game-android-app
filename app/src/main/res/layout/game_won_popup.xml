@@ -12,8 +12,9 @@
         android:layout_height="wrap_content"
         app:cardCornerRadius="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="1dp">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -28,9 +29,10 @@
             <TextView
                 android:id="@+id/textWin"
                 android:layout_width="250dp"
-                android:layout_height="150dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
+                android:elegantTextHeight="true"
                 android:fontFamily="@font/bungee_shade"
                 android:text="Well Played!"
                 android:textAlignment="center"
@@ -46,18 +48,19 @@
             <Button
                 android:id="@+id/btnEnterNameOK"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:layout_marginStart="32dp"
                 android:layout_marginEnd="32dp"
                 android:layout_marginBottom="16dp"
                 android:backgroundTint="@color/yellow"
-                android:text="OK"
+                android:elegantTextHeight="true"
+                android:fontFamily="@font/bungee"
                 android:onClick="enterNameHandler"
+                android:text="OK"
                 android:textColor="@color/white"
-                android:textSize="14sp"
+                android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.51"
                 app:layout_constraintStart_toStartOf="parent" />
 
 
@@ -67,9 +70,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="16dp"
+                android:elegantTextHeight="true"
                 android:text="Time Taken"
                 android:textColor="@color/yellow"
-                android:textSize="20sp"
+                android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@+id/btnEnterNameOK"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -97,6 +101,7 @@
                 android:layout_marginBottom="16dp"
                 android:hint="Enter name to submit your score!"
                 android:inputType="textPersonName"
+                android:singleLine="true"
                 android:textAlignment="center"
                 android:textColor="@color/brown"
                 android:textColorHint="@color/yellow"
