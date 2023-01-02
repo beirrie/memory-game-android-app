@@ -16,8 +16,15 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
-    public void playClickHandler(View view) {
+    public void playClickHandlerSP(View view) {
         Intent imageFetchIntent = new Intent(this, ImageFetchingActivity.class);
+        imageFetchIntent.putExtra("mode", "sp");
+        startActivity(imageFetchIntent);
+    }
+
+    public void playClickHandlerMP(View view) {
+        Intent imageFetchIntent = new Intent(this, ImageFetchingActivity.class);
+        imageFetchIntent.putExtra("mode", "mp");
         startActivity(imageFetchIntent);
     }
 

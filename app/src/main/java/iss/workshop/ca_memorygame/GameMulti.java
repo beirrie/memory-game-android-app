@@ -26,18 +26,21 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import iss.workshop.ca_memorygame.adapter.ImageAdapter;
 import iss.workshop.ca_memorygame.utils.GameUtils;
 
-public class GamePage extends AppCompatActivity {
+public class GameMulti extends AppCompatActivity {
 
     Dialog dialog;
+    int player = 1;
     EditText highScoreName;
     String nameForHighScore = "";
-    List<String> scores = new ArrayList<String>();
+    List<Long> time = new ArrayList<Long>(Arrays.asList(0L, 0L));
     List<String> namesInHighScores = new ArrayList<String>();
+    ArrayList<Bitmap> gameImageLocations;
     int newHighScoreIndex;
     TextView txtTimer;
     Handler customHandler = new Handler();
@@ -51,7 +54,7 @@ public class GamePage extends AppCompatActivity {
     ImageView selectedImageView1 = null;
     ImageView selectedImageView2 = null;
 
-    private int countMatch = 0;
+    private int countMatch = 5;
 
     Runnable updateTimerThread = new Runnable() {
         @Override
@@ -78,8 +81,12 @@ public class GamePage extends AppCompatActivity {
         dialog = new Dialog(this);
 
         Intent intent = getIntent();
-        ArrayList<Bitmap> gameImageLocations = GameUtils.getGridImages(intent);
+        gameImageLocations = GameUtils.getGridImages(intent);
 
+        startGame(gameImageLocations);
+    }
+
+    private void startGame(ArrayList<Bitmap> gameImageLocations) {
         GridView gridView = (GridView) findViewById(R.id.gridView);
         ImageAdapter imageAdapter = new ImageAdapter(this);
         gridView.setAdapter(imageAdapter);
@@ -116,11 +123,12 @@ public class GamePage extends AppCompatActivity {
                         if (getCountMatch() == 6) {
                             customHandler.removeCallbacks(updateTimerThread);
                             GameUtils.playWinSound(selectedImageView2);
-                            if (isHighScore()) {
-                                popupEnterName();
+                            if (player == 1) {
+                                time.set(0, timeInMilliSeconds);
+                                popupNextPlayer();
                             } else {
-                                Toast.makeText(GamePage.this, "Completed in " + getTimeScore() + "ms!", Toast.LENGTH_LONG).show();
-                                goToImageFetchingActivity();
+                                time.set(1, timeInMilliSeconds);
+                                popupEndGame();
                             }
                         } else {
                             GameUtils.playMatchSuccessSound(selectedImageView2);
@@ -162,36 +170,23 @@ public class GamePage extends AppCompatActivity {
         return txtTimer.getText().toString();
     }
 
-    private boolean isHighScore() {
-        long scoreDuration = GameUtils.getDuration(getTimeScore());
-        SharedPreferences pref = getSharedPreferences("scores", MODE_PRIVATE);
-        String highScore0 = pref.getString("highScore0", "");
-        String highScore1 = pref.getString("highScore1", "");
-        String highScore2 = pref.getString("highScore2", "");
-        String highScore3 = pref.getString("highScore3", "");
-        String highScore4 = pref.getString("highScore4", "");
-        scores.add(highScore0);
-        scores.add(highScore1);
-        scores.add(highScore2);
-        scores.add(highScore3);
-        scores.add(highScore4);
-        for (int i = 0; i < scores.size(); i++) {
-            if (scores.get(i).isEmpty()) {
-                newHighScoreIndex = i;
-                return true;
-            } else {
-                long timeInHighscore = GameUtils.getDuration(scores.get(i));
-                if (scoreDuration <= timeInHighscore) {
-                    newHighScoreIndex = i;
-                    return true;
-                }
+    private void popupNextPlayer() {
+        countMatch = 5;
+        dialog.setContentView(R.layout.next_player_popup);
+        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(final DialogInterface arg0) {
+                startGame(gameImageLocations);
             }
-        }
-        return false;
+        });
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        TextView textView = dialog.findViewById(R.id.timeTaken);
+        textView.setText("You took " + getTimeScore() + " seconds!");
+        dialog.show();
     }
 
-    private void popupEnterName() {
-        dialog.setContentView(R.layout.game_won_popup);
+    private void popupEndGame() {
+        dialog.setContentView(R.layout.mp_winner_popup);
         dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(final DialogInterface arg0) {
@@ -201,8 +196,25 @@ public class GamePage extends AppCompatActivity {
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         TextView textView = dialog.findViewById(R.id.timeTaken);
         textView.setText("You took " + getTimeScore() + "ms!");
+        TextView winner = dialog.findViewById(R.id.winnerId);
+        winner.setText(getWinner());
         highScoreName = dialog.findViewById(R.id.enterName);
         dialog.show();
+    }
+
+    private String getWinner() {
+
+        String winner = "";
+
+        if (time.get(0) < time.get(1)) {
+            winner = "Player 1";
+        } else if (time.get(0) > time.get(1)) {
+            winner = "Player 2";
+        } else if (time.get(0) == time.get(1)) {
+            winner = "None";
+        }
+
+        return winner;
     }
 
     public void enterNameHandler(View view) {
@@ -215,29 +227,14 @@ public class GamePage extends AppCompatActivity {
             error.setText("Not more than 8 letters please!");
             return;
         }
-        setScoreBoard();
+        //setScoreBoard();
         dialog.dismiss();
         goToImageFetchingActivity();
     }
 
-    public void setScoreBoard() {
-        SharedPreferences pref = getSharedPreferences("scores", MODE_PRIVATE);
-        namesInHighScores.add(pref.getString("highScoreName0", ""));
-        namesInHighScores.add(pref.getString("highScoreName1", ""));
-        namesInHighScores.add(pref.getString("highScoreName2", ""));
-        namesInHighScores.add(pref.getString("highScoreName3", ""));
-        namesInHighScores.add(pref.getString("highScoreName4", ""));
-
-        SharedPreferences.Editor editor = pref.edit();
-
-        for (int i = scores.size() - 1; i > newHighScoreIndex; i--) {
-            editor.putString("highScore" + i, scores.get(i - 1));
-            editor.putString("highScoreName" + i, namesInHighScores.get(i - 1));
-            editor.commit();
-        }
-        editor.putString("highScoreName" + newHighScoreIndex, nameForHighScore);
-        editor.putString("highScore" + newHighScoreIndex, getTimeScore());
-        editor.commit();
+    public void nextPlayer(View view) {
+        player++;
+        dialog.dismiss();
     }
 
     public void goToImageFetchingActivity() {
