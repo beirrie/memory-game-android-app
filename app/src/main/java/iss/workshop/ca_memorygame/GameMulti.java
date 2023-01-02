@@ -34,13 +34,11 @@ public class GameMulti extends AppCompatActivity {
 
     Dialog dialog;
     int player = 1;
-    EditText highScoreName;
     List<Long> time = new ArrayList<Long>(Arrays.asList(0L, 0L));
     ArrayList<Bitmap> gameImageLocations;
     TextView txtTimer;
     Handler customHandler = new Handler();
     long startTime = 0L, timeInMilliSeconds = 0L, timeSwapBuff = 0L, updateTime = 0L;
-
 
     private int clicked = 0;
     int lastClicked = -1;
@@ -48,7 +46,7 @@ public class GameMulti extends AppCompatActivity {
     ImageView selectedImageView1 = null;
     ImageView selectedImageView2 = null;
 
-    private int countMatch = 0;
+    private int countMatch = 5;
 
     Runnable updateTimerThread = new Runnable() {
         @Override
@@ -165,7 +163,7 @@ public class GameMulti extends AppCompatActivity {
     }
 
     private void popupNextPlayer() {
-        countMatch = 0;
+        countMatch = 5;
         dialog.setContentView(R.layout.next_player_popup);
         dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
@@ -175,7 +173,7 @@ public class GameMulti extends AppCompatActivity {
         });
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         TextView textView = dialog.findViewById(R.id.timeTaken);
-        textView.setText("Player 1 took " + getTimeScore() + " seconds!");
+        textView.setText("You took " + getTimeScore() + " seconds!");
         dialog.show();
     }
 
@@ -189,7 +187,7 @@ public class GameMulti extends AppCompatActivity {
         });
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         TextView textView = dialog.findViewById(R.id.timeTaken);
-        textView.setText("Player 2 took " + getTimeScore() + "ms!");
+        textView.setText("You took " + getTimeScore() + "ms!");
         TextView winner = dialog.findViewById(R.id.winnerId);
         winner.setText(getWinner());
         dialog.show();
