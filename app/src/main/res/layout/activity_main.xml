@@ -7,16 +7,33 @@
     tools:context=".MainActivity">
 
     <Button
-        android:id="@+id/btnPlay"
+        android:id="@+id/btnPlaySP"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:elegantTextHeight="true"
         android:fontFamily="@font/bungee"
-        android:onClick="playClickHandler"
-        android:text="@string/play"
+        android:onClick="playClickHandlerSP"
+        android:text="@string/playSP"
         android:textColor="#ffeeec"
         android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="100dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnPlayMP"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btnPlayMP"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:elegantTextHeight="true"
+        android:fontFamily="@font/bungee"
+        android:onClick="playClickHandlerMP"
+        android:text="@string/playMP"
+        android:textColor="#ffeeec"
+        android:textSize="20sp"
+        android:layout_marginTop="200dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnScoreBoard"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -25,7 +42,7 @@
         android:id="@+id/btnScoreBoard"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="40dp"
         android:elegantTextHeight="true"
         android:fontFamily="@font/bungee"
         android:onClick="scoreBoardClickHandler"
@@ -34,6 +51,6 @@
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnPlay" />
+        app:layout_constraintTop_toBottomOf="@+id/btnPlayMP" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
