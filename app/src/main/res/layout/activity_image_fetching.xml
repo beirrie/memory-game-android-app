@@ -4,6 +4,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/yellow_200"
     tools:context=".ImageFetchingActivity">
 
     <LinearLayout
@@ -26,18 +27,23 @@
             android:layout_marginStart="4dp"
             android:padding="10dp"
             android:text="@string/imageFetch"
+            android:backgroundTint="@color/light_yellow"
+            android:textColor="#FF9800"
             android:onClick="fetchImageClickHandler"
             tools:layout_editor_absoluteX="301dp"
             tools:layout_editor_absoluteY="49dp" />
     </LinearLayout>
     <ProgressBar
         android:id="@+id/progressBar"
-        style="@android:style/Widget.ProgressBar.Horizontal"
+        style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
         android:layout_height="20dp"
         android:layout_marginTop="2dp"
         android:backgroundTint="#3EE7ED"
         android:progress="0"
+        android:progressBackgroundTint="@color/light_yellow"
+        android:progressTint="#FF9800"
+        android:padding="10dp"
         android:visibility="invisible" />
 
     <TextView

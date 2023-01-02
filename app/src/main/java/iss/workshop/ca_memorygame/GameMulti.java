@@ -3,7 +3,6 @@ package iss.workshop.ca_memorygame;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -16,7 +15,6 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -37,16 +35,12 @@ public class GameMulti extends AppCompatActivity {
     Dialog dialog;
     int player = 1;
     EditText highScoreName;
-    String nameForHighScore = "";
     List<Long> time = new ArrayList<Long>(Arrays.asList(0L, 0L));
-    List<String> namesInHighScores = new ArrayList<String>();
     ArrayList<Bitmap> gameImageLocations;
-    int newHighScoreIndex;
     TextView txtTimer;
     Handler customHandler = new Handler();
     long startTime = 0L, timeInMilliSeconds = 0L, timeSwapBuff = 0L, updateTime = 0L;
 
-    private int numOfElements;
 
     private int clicked = 0;
     int lastClicked = -1;
@@ -181,7 +175,7 @@ public class GameMulti extends AppCompatActivity {
         });
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         TextView textView = dialog.findViewById(R.id.timeTaken);
-        textView.setText("You took " + getTimeScore() + " seconds!");
+        textView.setText("Player 1 took " + getTimeScore() + " seconds!");
         dialog.show();
     }
 
@@ -195,10 +189,9 @@ public class GameMulti extends AppCompatActivity {
         });
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         TextView textView = dialog.findViewById(R.id.timeTaken);
-        textView.setText("You took " + getTimeScore() + "ms!");
+        textView.setText("Player 2 took " + getTimeScore() + "ms!");
         TextView winner = dialog.findViewById(R.id.winnerId);
         winner.setText(getWinner());
-        highScoreName = dialog.findViewById(R.id.enterName);
         dialog.show();
     }
 
@@ -217,21 +210,6 @@ public class GameMulti extends AppCompatActivity {
         return winner;
     }
 
-    public void enterNameHandler(View view) {
-        nameForHighScore = highScoreName.getText().toString();
-        if (nameForHighScore == null || nameForHighScore.isEmpty()) {
-            goToImageFetchingActivity();
-        }
-        if (nameForHighScore.length() > 9) {
-            TextView error = dialog.findViewById(R.id.errorMsg);
-            error.setText("Not more than 8 letters please!");
-            return;
-        }
-        //setScoreBoard();
-        dialog.dismiss();
-        goToImageFetchingActivity();
-    }
-
     public void nextPlayer(View view) {
         player++;
         dialog.dismiss();
@@ -239,6 +217,7 @@ public class GameMulti extends AppCompatActivity {
 
     public void goToImageFetchingActivity() {
         Intent intent = new Intent(this, ImageFetchingActivity.class);
+        intent.putExtra("mode", "mp");
         startActivity(intent);
         finish();
     }

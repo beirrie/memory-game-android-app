@@ -242,6 +242,7 @@ public class GamePage extends AppCompatActivity {
 
     public void goToImageFetchingActivity() {
         Intent intent = new Intent(this, ImageFetchingActivity.class);
+        intent.putExtra("mode", "sp");
         startActivity(intent);
         finish();
     }

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/yellow_200"
     tools:context=".MainActivity">
 
     <Button
@@ -14,8 +15,9 @@
         android:fontFamily="@font/bungee"
         android:onClick="playClickHandlerSP"
         android:text="@string/playSP"
-        android:textColor="#ffeeec"
+        android:textColor="#FF9800"
         android:textSize="20sp"
+        android:backgroundTint="@color/light_yellow"
         android:layout_marginTop="100dp"
         app:layout_constraintBottom_toTopOf="@+id/btnPlayMP"
         app:layout_constraintEnd_toEndOf="parent"
@@ -23,6 +25,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
+        android:backgroundTint="@color/light_yellow"
         android:id="@+id/btnPlayMP"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
@@ -30,7 +33,7 @@
         android:fontFamily="@font/bungee"
         android:onClick="playClickHandlerMP"
         android:text="@string/playMP"
-        android:textColor="#ffeeec"
+        android:textColor="#FF9800"
         android:textSize="20sp"
         android:layout_marginTop="200dp"
         app:layout_constraintBottom_toTopOf="@+id/btnScoreBoard"
@@ -47,7 +50,8 @@
         android:fontFamily="@font/bungee"
         android:onClick="scoreBoardClickHandler"
         android:text="Score Board"
-        android:textColor="#ffeeec"
+        android:backgroundTint="@color/light_yellow"
+        android:textColor="#FF9800"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
