@@ -11,7 +11,6 @@ import android.os.Handler;
 import android.os.SystemClock;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -34,13 +33,11 @@ public class GameMulti extends AppCompatActivity {
 
     Dialog dialog;
     int player = 1;
-    EditText highScoreName;
     List<Long> time = new ArrayList<Long>(Arrays.asList(0L, 0L));
     ArrayList<Bitmap> gameImageLocations;
     TextView txtTimer;
     Handler customHandler = new Handler();
     long startTime = 0L, timeInMilliSeconds = 0L, timeSwapBuff = 0L, updateTime = 0L;
-
 
     private int clicked = 0;
     int lastClicked = -1;
@@ -175,7 +172,7 @@ public class GameMulti extends AppCompatActivity {
         });
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         TextView textView = dialog.findViewById(R.id.timeTaken);
-        textView.setText("Player 1 took " + getTimeScore() + " seconds!");
+        textView.setText("You took " + getTimeScore() + " seconds!");
         dialog.show();
     }
 
@@ -189,7 +186,7 @@ public class GameMulti extends AppCompatActivity {
         });
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         TextView textView = dialog.findViewById(R.id.timeTaken);
-        textView.setText("Player 2 took " + getTimeScore() + "ms!");
+        textView.setText("You took " + getTimeScore() + "ms!");
         TextView winner = dialog.findViewById(R.id.winnerId);
         winner.setText(getWinner());
         dialog.show();
