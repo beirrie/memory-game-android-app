@@ -186,7 +186,7 @@ public class GameMulti extends AppCompatActivity {
         });
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         TextView textView = dialog.findViewById(R.id.timeTaken);
-        String p2Time = " Player 2 took " + getTimeScore() + " seconds";
+        String p2Time = "Player 2 took " + getTimeScore() + " seconds";
         String displayString = p1Time + "\n" + p2Time;
         textView.setText(displayString);
         TextView winner = dialog.findViewById(R.id.winnerId);
