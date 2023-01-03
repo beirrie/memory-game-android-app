@@ -91,6 +91,8 @@ public class ImageFetchingActivity extends AppCompatActivity {
                 }
                 prepareDataForListener();
                 runOnUiThread(new UpdateGridViewRunnable());
+            } else {
+                runOnUiThread(() -> Toast.makeText(this, result, Toast.LENGTH_LONG).show());
             }
         });
         threadDownloadImage.start();

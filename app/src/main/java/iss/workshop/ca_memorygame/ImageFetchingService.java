@@ -25,7 +25,7 @@ public class ImageFetchingService {
 
     public String prepareImageUrls(String url){
         if(url == null || url == ""){
-            return "Please enter valid URL";
+            return "Invalid Url";
         }
         try {
             imgUrlList = new ArrayList<>();
@@ -38,7 +38,21 @@ public class ImageFetchingService {
                     if (imgUrlList.size() == 20)
                         break;
                 }
+
+                if (link.attr("data-src").contains(".jpg") && link.attr("data-src").contains("https://")
+                        && !link.attr("data-src").contains("?")) {
+                    imgUrlList.add(link.attr("data-src"));
+                    if (imgUrlList.size() == 20)
+                        break;
+                }
             }
+
+            if(imgUrlList.size() < 20)
+            {
+                return "Insufficient Images";
+            }
+
+
             return "success";
         }
         catch (IOException e)
