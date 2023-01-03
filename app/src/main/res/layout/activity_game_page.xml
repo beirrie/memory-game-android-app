@@ -3,9 +3,9 @@
     android:id="@+id/gamePageLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/yellow_200"
     android:gravity="center"
-    android:orientation="vertical"
-    android:background="#E4E0E0">
+    android:orientation="vertical">
 
     <FrameLayout
         android:id="@+id/layout1"
@@ -17,10 +17,12 @@
             android:id="@+id/gameScoreDynamic"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:fontFamily="@font/bungee"
             android:text="0"
-            android:textSize="25dp"
-            android:textStyle="bold"
-            android:layout_marginLeft="10dp">
+            android:textColor="@color/brown"
+            android:textSize="20sp"
+            android:textStyle="bold">
 
         </TextView>
 
@@ -28,21 +30,26 @@
             android:id="@+id/gameScoreStatic"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="25dp"
+            android:fontFamily="@font/bungee"
             android:text=" of 6 matches"
-            android:textSize="25dp"
-            android:textStyle="bold"
-            android:layout_marginLeft="25dp">
+            android:textColor="@color/brown"
+            android:textSize="20sp"
+            android:textStyle="bold">
 
         </TextView>
 
         <TextView
             android:id="@+id/timerDynamic"
-            android:layout_width="wrap_content"
+            android:layout_width="115dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:fontFamily="@font/bungee"
             android:text="0:00:000"
-            android:textSize="25dp"
-            android:textStyle="bold"
-            android:layout_gravity="right">
+            android:textAlignment="viewStart"
+            android:textColor="@color/brown"
+            android:textSize="20sp"
+            android:textStyle="bold">
 
         </TextView>
 
@@ -57,6 +64,6 @@
         android:horizontalSpacing="10dp"
         android:numColumns="3"
         android:stretchMode="columnWidth"
-        android:verticalSpacing="10dp"/>
+        android:verticalSpacing="10dp" />
 
 </LinearLayout>

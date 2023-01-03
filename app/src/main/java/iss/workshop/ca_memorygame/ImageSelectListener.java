@@ -22,11 +22,13 @@ public class ImageSelectListener implements AdapterView.OnItemClickListener {
     private List<File> imageFiles;
     private List<Boolean> selectedImages;
     private boolean downloadFinished;
+    private String mode;
 
-    public ImageSelectListener(AppCompatActivity currentActivity) {
+    public ImageSelectListener(AppCompatActivity currentActivity, String mode) {
         this.currentActivity = currentActivity;
         this.downloadFinished = false;
         this.selectedImages = new ArrayList<>();
+        this.mode = mode;
     }
 
     public void setFiles(List<File> files) {
@@ -81,9 +83,16 @@ public class ImageSelectListener implements AdapterView.OnItemClickListener {
                 }
             }
 
-            Intent intent = new Intent(this.currentActivity, GamePage.class);
-            intent.putStringArrayListExtra("image_paths", filePaths);
-            this.currentActivity.startActivity(intent);
+            if (mode.equalsIgnoreCase("sp")) {
+                Intent intent = new Intent(this.currentActivity, GamePage.class);
+                intent.putStringArrayListExtra("image_paths", filePaths);
+                this.currentActivity.startActivity(intent);
+            } else if (mode.equalsIgnoreCase("mp")) {
+                Intent intent = new Intent(this.currentActivity, GameMulti.class);
+                intent.putStringArrayListExtra("image_paths", filePaths);
+                this.currentActivity.startActivity(intent);
+            }
+            currentActivity.finish();
         }
     }
 }

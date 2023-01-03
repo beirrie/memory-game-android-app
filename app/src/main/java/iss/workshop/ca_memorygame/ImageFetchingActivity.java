@@ -2,6 +2,7 @@ package iss.workshop.ca_memorygame;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Environment;
@@ -30,10 +31,14 @@ public class ImageFetchingActivity extends AppCompatActivity {
     private TextView progressDes;
     private boolean isThreadRunning;
     private ImageSelectListener listener;
+    private String mode;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_fetching);
+
+        Intent intent = getIntent();
+        mode = intent.getStringExtra("mode");
 
         urlSearchBar = findViewById(R.id.urlSearchBar);
         progressBar = findViewById(R.id.progressBar);
@@ -56,7 +61,7 @@ public class ImageFetchingActivity extends AppCompatActivity {
         loadDefaultImage();
         GridView gridView = findViewById(R.id.gvImages);
         adapter = new GridImageAdapter(this, this.imageFetchingService.imageContents);
-        listener = new ImageSelectListener(this);
+        listener = new ImageSelectListener(this, mode);
 
         gridView.setAdapter(adapter);
         gridView.setOnItemClickListener(listener);
