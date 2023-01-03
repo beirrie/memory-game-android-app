@@ -63,24 +63,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
-
-            <TextView
-                android:id="@+id/timeTaken"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="16dp"
-                android:elegantTextHeight="true"
-                android:text="Time Taken"
-                android:textColor="@color/yellow"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/nextPlayer"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textWin"
-                app:layout_constraintVertical_bias="0.0" />
-
             <TextView
                 android:id="@+id/nextPlayer"
                 android:layout_width="wrap_content"
@@ -92,17 +74,8 @@
                 android:text="Pass the phone to the next player"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textWin"
                 app:layout_constraintBottom_toTopOf="@+id/btnReady"/>
-
-            <TextView
-                android:id="@+id/errorMsg"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/teal_700"
-                android:textSize="16sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/timeTaken" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

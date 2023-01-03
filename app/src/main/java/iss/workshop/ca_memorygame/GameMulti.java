@@ -38,6 +38,7 @@ public class GameMulti extends AppCompatActivity {
     TextView txtTimer;
     Handler customHandler = new Handler();
     long startTime = 0L, timeInMilliSeconds = 0L, timeSwapBuff = 0L, updateTime = 0L;
+    String p1Time;
 
     private int clicked = 0;
     int lastClicked = -1;
@@ -171,8 +172,7 @@ public class GameMulti extends AppCompatActivity {
             }
         });
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        TextView textView = dialog.findViewById(R.id.timeTaken);
-        textView.setText("You took " + getTimeScore() + " seconds!");
+        p1Time = "Player 1 took " + getTimeScore() + " seconds";
         dialog.show();
     }
 
@@ -186,7 +186,9 @@ public class GameMulti extends AppCompatActivity {
         });
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         TextView textView = dialog.findViewById(R.id.timeTaken);
-        textView.setText("You took " + getTimeScore() + "ms!");
+        String p2Time = " Player 2 took " + getTimeScore() + " seconds";
+        String displayString = p1Time + "\n" + p2Time;
+        textView.setText(displayString);
         TextView winner = dialog.findViewById(R.id.winnerId);
         winner.setText(getWinner());
         dialog.show();
