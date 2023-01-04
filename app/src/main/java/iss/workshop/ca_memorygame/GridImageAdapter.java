@@ -9,6 +9,11 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.MultiTransformation;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+
 import java.io.File;
 import java.util.ArrayList;
 
@@ -47,7 +52,10 @@ public class GridImageAdapter extends BaseAdapter {
 
         ImageView imageView = convertView.findViewById(R.id.gridImage);
 
-        imageView.setImageBitmap(fetchedImages.get(position));
+        Glide.with(imageView.getContext())
+                .load(fetchedImages.get(position))
+                .transform(new MultiTransformation(new CenterCrop(), new RoundedCorners(35)))
+                .into(imageView);
 
         return convertView;
     }
