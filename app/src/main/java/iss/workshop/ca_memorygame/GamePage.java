@@ -195,6 +195,7 @@ public class GamePage extends AppCompatActivity {
         dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(final DialogInterface arg0) {
+                Toast.makeText(GamePage.this, "Play again!", Toast.LENGTH_LONG).show();
                 goToImageFetchingActivity();
             }
         });
