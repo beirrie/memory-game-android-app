@@ -1,7 +1,6 @@
 package iss.workshop.ca_memorygame;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -12,10 +11,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
+
+import iss.workshop.ca_memorygame.activity.GameActivity;
+import iss.workshop.ca_memorygame.activity.GameMultiActivity;
 
 public class ImageSelectListener implements AdapterView.OnItemClickListener {
     private final AppCompatActivity currentActivity;
@@ -84,11 +83,11 @@ public class ImageSelectListener implements AdapterView.OnItemClickListener {
             }
 
             if (mode.equalsIgnoreCase("sp")) {
-                Intent intent = new Intent(this.currentActivity, GamePage.class);
+                Intent intent = new Intent(this.currentActivity, GameActivity.class);
                 intent.putStringArrayListExtra("image_paths", filePaths);
                 this.currentActivity.startActivity(intent);
             } else if (mode.equalsIgnoreCase("mp")) {
-                Intent intent = new Intent(this.currentActivity, GameMulti.class);
+                Intent intent = new Intent(this.currentActivity, GameMultiActivity.class);
                 intent.putStringArrayListExtra("image_paths", filePaths);
                 this.currentActivity.startActivity(intent);
             }

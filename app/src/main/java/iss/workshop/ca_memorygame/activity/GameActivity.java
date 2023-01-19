@@ -1,4 +1,4 @@
-package iss.workshop.ca_memorygame;
+package iss.workshop.ca_memorygame.activity;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -20,30 +20,26 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.MultiTransformation;
-import com.bumptech.glide.load.resource.bitmap.CenterCrop;
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
-
 import java.util.ArrayList;
 import java.util.List;
 
+import iss.workshop.ca_memorygame.R;
 import iss.workshop.ca_memorygame.adapter.ImageAdapter;
+import iss.workshop.ca_memorygame.service.BgMusicService;
 import iss.workshop.ca_memorygame.utils.GameUtils;
+import iss.workshop.ca_memorygame.utils.ImageUtils;
 
-public class GamePage extends AppCompatActivity {
+public class GameActivity extends AppCompatActivity {
 
     Dialog dialog;
     EditText highScoreName;
     String nameForHighScore = "";
-    List<String> scores = new ArrayList<String>();
-    List<String> namesInHighScores = new ArrayList<String>();
+    List<String> scores = new ArrayList<>();
+    List<String> namesInHighScores = new ArrayList<>();
     int newHighScoreIndex;
     TextView txtTimer;
     Handler customHandler = new Handler();
     long startTime = 0L, timeInMilliSeconds = 0L, timeSwapBuff = 0L, updateTime = 0L;
-
-    private int numOfElements;
 
     private int clicked = 0;
     int lastClicked = -1;
@@ -56,7 +52,6 @@ public class GamePage extends AppCompatActivity {
     Runnable updateTimerThread = new Runnable() {
         @Override
         public void run() {
-
             timeInMilliSeconds = SystemClock.uptimeMillis() - startTime;
             updateTime = timeSwapBuff + timeInMilliSeconds;
             int secs = (int) (updateTime / 1000);
@@ -73,7 +68,8 @@ public class GamePage extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_game_page);
+        setContentView(R.layout.activity_game);
+        BgMusicService.startBgMusicService(this, "gaming");
 
         dialog = new Dialog(this);
 
@@ -93,17 +89,11 @@ public class GamePage extends AppCompatActivity {
                     lastClicked = position;
                     selectedImageView1 = (ImageView) view;
                     clicked++;
-                    Glide.with(selectedImageView1.getContext())
-                            .load(gameImageLocations.get(position))
-                            .transform(new MultiTransformation(new CenterCrop(), new RoundedCorners(getResources().getInteger(R.integer.corner_radius))))
-                            .into(selectedImageView1);
+                    ImageUtils.setImage(selectedImageView1, gameImageLocations.get(position));
                 } else if (clicked == 1) {
                     selectedImageView2 = (ImageView) view;
                     clicked++;
-                    Glide.with(selectedImageView2.getContext())
-                            .load(gameImageLocations.get(position))
-                            .transform(new MultiTransformation(new CenterCrop(), new RoundedCorners(getResources().getInteger(R.integer.corner_radius))))
-                            .into(selectedImageView2);
+                    ImageUtils.setImage(selectedImageView2, gameImageLocations.get(position));
                     if (gameImageLocations.get(lastClicked) == gameImageLocations.get(position)) {
                         countMatch++;
                         TextView scoreTextView = findViewById(R.id.gameScoreDynamic);
@@ -119,7 +109,7 @@ public class GamePage extends AppCompatActivity {
                             if (isHighScore()) {
                                 popupEnterName();
                             } else {
-                                Toast.makeText(GamePage.this, "Completed in " + getTimeScore() + "ms!", Toast.LENGTH_LONG).show();
+                                Toast.makeText(GameActivity.this, "Completed in " + getTimeScore() + "ms!", Toast.LENGTH_LONG).show();
                                 goToImageFetchingActivity();
                             }
                         } else {
@@ -133,14 +123,8 @@ public class GamePage extends AppCompatActivity {
                         handler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                Glide.with(selectedImageView1.getContext())
-                                        .load(R.drawable.placeholder)
-                                        .transform(new MultiTransformation(new CenterCrop(), new RoundedCorners(getResources().getInteger(R.integer.corner_radius))))
-                                        .into(selectedImageView1);
-                                Glide.with(selectedImageView2.getContext())
-                                        .load(R.drawable.placeholder)
-                                        .transform(new MultiTransformation(new CenterCrop(), new RoundedCorners(getResources().getInteger(R.integer.corner_radius))))
-                                        .into(selectedImageView2);
+                                ImageUtils.setImage(selectedImageView1, R.drawable.placeholder);
+                                ImageUtils.setImage(selectedImageView2, R.drawable.placeholder);
                                 clicked = 0;
                             }
                         }, 1000);
@@ -195,7 +179,7 @@ public class GamePage extends AppCompatActivity {
         dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(final DialogInterface arg0) {
-                Toast.makeText(GamePage.this, "Play again!", Toast.LENGTH_LONG).show();
+                Toast.makeText(GameActivity.this, "Play again!", Toast.LENGTH_LONG).show();
                 goToImageFetchingActivity();
             }
         });
@@ -246,5 +230,17 @@ public class GamePage extends AppCompatActivity {
         intent.putExtra("mode", "sp");
         startActivity(intent);
         finish();
+    }
+
+    @Override
+    protected void onPause() {
+        BgMusicService.startBgMusicService(this, "pause");
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        BgMusicService.startBgMusicService(this, "gaming");
+        super.onResume();
     }
 }

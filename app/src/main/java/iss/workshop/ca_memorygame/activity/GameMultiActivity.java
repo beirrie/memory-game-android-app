@@ -1,4 +1,4 @@
-package iss.workshop.ca_memorygame;
+package iss.workshop.ca_memorygame.activity;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -17,19 +17,17 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.MultiTransformation;
-import com.bumptech.glide.load.resource.bitmap.CenterCrop;
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import iss.workshop.ca_memorygame.R;
 import iss.workshop.ca_memorygame.adapter.ImageAdapter;
+import iss.workshop.ca_memorygame.service.BgMusicService;
 import iss.workshop.ca_memorygame.utils.GameUtils;
+import iss.workshop.ca_memorygame.utils.ImageUtils;
 
-public class GameMulti extends AppCompatActivity {
+public class GameMultiActivity extends AppCompatActivity {
 
     Dialog dialog;
     int player = 1;
@@ -51,7 +49,6 @@ public class GameMulti extends AppCompatActivity {
     Runnable updateTimerThread = new Runnable() {
         @Override
         public void run() {
-
             timeInMilliSeconds = SystemClock.uptimeMillis() - startTime;
             updateTime = timeSwapBuff + timeInMilliSeconds;
             int secs = (int) (updateTime / 1000);
@@ -68,7 +65,8 @@ public class GameMulti extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_game_page);
+        setContentView(R.layout.activity_game);
+        BgMusicService.startBgMusicService(this, "gaming");
 
         dialog = new Dialog(this);
 
@@ -92,17 +90,11 @@ public class GameMulti extends AppCompatActivity {
                     lastClicked = position;
                     selectedImageView1 = (ImageView) view;
                     clicked++;
-                    Glide.with(selectedImageView1.getContext())
-                            .load(gameImageLocations.get(position))
-                            .transform(new MultiTransformation(new CenterCrop(), new RoundedCorners(getResources().getInteger(R.integer.corner_radius))))
-                            .into(selectedImageView1);
+                    ImageUtils.setImage(selectedImageView1, gameImageLocations.get(position));
                 } else if (clicked == 1) {
                     selectedImageView2 = (ImageView) view;
                     clicked++;
-                    Glide.with(selectedImageView2.getContext())
-                            .load(gameImageLocations.get(position))
-                            .transform(new MultiTransformation(new CenterCrop(), new RoundedCorners(getResources().getInteger(R.integer.corner_radius))))
-                            .into(selectedImageView2);
+                    ImageUtils.setImage(selectedImageView2, gameImageLocations.get(position));
                     if (gameImageLocations.get(lastClicked) == gameImageLocations.get(position)) {
                         countMatch++;
                         TextView scoreTextView = findViewById(R.id.gameScoreDynamic);
@@ -133,14 +125,8 @@ public class GameMulti extends AppCompatActivity {
                         handler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                Glide.with(selectedImageView1.getContext())
-                                        .load(R.drawable.placeholder)
-                                        .transform(new MultiTransformation(new CenterCrop(), new RoundedCorners(getResources().getInteger(R.integer.corner_radius))))
-                                        .into(selectedImageView1);
-                                Glide.with(selectedImageView2.getContext())
-                                        .load(R.drawable.placeholder)
-                                        .transform(new MultiTransformation(new CenterCrop(), new RoundedCorners(getResources().getInteger(R.integer.corner_radius))))
-                                        .into(selectedImageView2);
+                                ImageUtils.setImage(selectedImageView1, R.drawable.placeholder);
+                                ImageUtils.setImage(selectedImageView2, R.drawable.placeholder);
                                 clicked = 0;
                             }
                         }, 1000);
@@ -172,7 +158,7 @@ public class GameMulti extends AppCompatActivity {
             }
         });
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        p1Time = "Player 1 took " + getTimeScore() + " seconds";
+        p1Time = "Player 1 took " + getTimeScore() + " ms";
         dialog.show();
     }
 
@@ -186,7 +172,7 @@ public class GameMulti extends AppCompatActivity {
         });
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         TextView textView = dialog.findViewById(R.id.timeTaken);
-        String p2Time = "Player 2 took " + getTimeScore() + " seconds";
+        String p2Time = "Player 2 took " + getTimeScore() + " ms";
         String displayString = p1Time + "\n" + p2Time;
         textView.setText(displayString);
         TextView winner = dialog.findViewById(R.id.winnerId);
@@ -219,5 +205,17 @@ public class GameMulti extends AppCompatActivity {
         intent.putExtra("mode", "mp");
         startActivity(intent);
         finish();
+    }
+
+    @Override
+    protected void onPause() {
+        BgMusicService.startBgMusicService(this, "pause");
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        BgMusicService.startBgMusicService(this, "gaming");
+        super.onResume();
     }
 }

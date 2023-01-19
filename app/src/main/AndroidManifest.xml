@@ -2,6 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-feature android:name="android.hardware.screen.portrait" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -12,22 +17,27 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CA_MemoryGame"
         tools:targetApi="31">
+        <service
+            android:name=".service.BgMusicService"
+            android:enabled="true"
+            android:exported="true" />
+
         <activity
-            android:name=".SplashScreen"
+            android:name=".activity.SplashScreen"
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".ImageFetchingActivity"
+            android:name=".activity.ImageFetchingActivity"
             android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="portrait">
@@ -36,7 +46,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".Scoreboard"
+            android:name=".activity.ScoreboardActivity"
             android:exported="false"
             android:screenOrientation="portrait">
             <meta-data
@@ -44,7 +54,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".GamePage"
+            android:name=".activity.GameActivity"
             android:exported="false"
             android:screenOrientation="portrait">
             <meta-data
@@ -52,7 +62,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".GameMulti"
+            android:name=".activity.GameMultiActivity"
             android:exported="false"
             android:screenOrientation="portrait">
             <meta-data
@@ -60,10 +70,9 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".activity.MainActivity"
             android:exported="true"
             android:screenOrientation="portrait">
-
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -74,8 +83,4 @@
             android:resource="@array/preloaded_fonts" />
     </application>
 
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.INTERNET" />
-
-    <uses-feature android:name="android.hardware.screen.portrait" />
 </manifest>
